@@ -1,0 +1,6 @@
+aws:
+  sts:
+    region: REGION
+    roleArn: ROLE
+    sessionName: SESSION_NAME
+    streamName: STREAM_NAME
