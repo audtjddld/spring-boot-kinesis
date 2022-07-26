@@ -52,3 +52,70 @@ consumer 설정이 아직은 확인 중이라 정리되는대로 다시 push 예
 
 [spring cloud stream](https://spring.io/blog/2021/06/04/spring-integration-aws-2-5-1-and-spring-cloud-stream-kinesis-binder-2-2-0-available) 에서는 지원이 끊긴 것 같은(?) 상황이라 별도로 작성해 봄.
 
+# IAM role 추가
+
+kinesis role
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt123",
+            "Effect": "Allow",
+            "Action": [
+                "kinesis:DescribeStream",
+                "kinesis:PutRecord",
+                "kinesis:PutRecords",
+                "kinesis:GetShardIterator",
+                "kinesis:GetRecords",
+                "kinesis:ListShards",
+                "kinesis:DescribeStreamSummary",
+                "kinesis:RegisterStreamConsumer"
+            ],
+            "Resource": [
+                "arn:aws:kinesis:region위치:세션명:stream/kinesisStream명"
+            ]
+        }
+    ]
+}
+```
+DynamoDB 
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Stmt234",
+            "Effect": "Allow",
+            "Action": [
+                "kinesis:SubscribeToShard",
+                "kinesis:DescribeStreamConsumer"
+            ],
+            "Resource": [
+                "arn:aws:kinesis:region위치:세션명:stream/kinesisStream명/*"
+            ]
+        },
+        {
+            "Sid": "Stmt456",
+            "Effect": "Allow",
+            "Action": [
+                "dynamodb:*"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Sid": "Stmt789",
+            "Effect": "Allow",
+            "Action": [
+                "cloudwatch:PutMetricData"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
+```
+
