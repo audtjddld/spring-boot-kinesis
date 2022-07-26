@@ -4,7 +4,6 @@ import mu.KotlinLogging
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.stereotype.Component
 import software.amazon.kinesis.coordinator.Scheduler
-import javax.annotation.PostConstruct
 
 @Component
 class StockTradeConsumer(
@@ -13,8 +12,7 @@ class StockTradeConsumer(
 ) {
     private val logger = KotlinLogging.logger {}
 
-    @PostConstruct
-    fun init() {
+    fun run() {
         logger.info { "kinesis consumer running." }
         threadPoolTaskExecutor.execute {
             scheduler.run()
