@@ -39,6 +39,8 @@ dependencies {
 
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
     implementation("org.slf4j:slf4j-api:1.7.36")
+
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.3")
 }
 
 tasks.withType<KotlinCompile> {
