@@ -2,7 +2,7 @@ package com.example.kinesis.web
 
 import com.amazonaws.services.kinesis.producer.KinesisProducer
 import com.example.kinesis.web.model.StockTrade
-import com.example.kinesis.web.model.TradeType
+import mu.KotlinLogging
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -16,32 +16,33 @@ class ProducingController(
 
     var count: Int = 0
     val streamName = "StockTradeStream"
+    private val logger = KotlinLogging.logger {}
 
     @GetMapping()
     fun produceMessage(): ResponseEntity<Void> {
 
         val message = StockTrade(
             "AMZN",
-            tradeType(),
             Random.nextDouble(),
             Random.nextLong(),
             Random.nextLong()
         )
 
+        logger.info { "send message : $message" }
         producer.addUserRecord(
             streamName,
             "AMZN",
-            ByteBuffer.wrap(message.toString().toByteArray())
+            ByteBuffer.wrap(message.toJsonAsBytes())
         )
 
         return ResponseEntity.ok().build()
     }
 
-    fun tradeType(): TradeType {
+    fun tradeType(): String {
         return if (Random.nextInt() % 2 == 0) {
-            TradeType.BUY
+            "BUY"
         } else {
-            TradeType.SELL
+            "SELL"
         }
     }
 }
