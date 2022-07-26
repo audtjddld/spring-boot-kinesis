@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration
 class KinesisConfig(
     private val awsProperties: AwsProperties
 ) {
-
     @Bean
     fun amazonKinesis(): AmazonKinesis {
 

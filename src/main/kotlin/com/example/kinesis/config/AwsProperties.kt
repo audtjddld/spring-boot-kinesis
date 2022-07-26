@@ -9,5 +9,5 @@ data class AwsProperties(
     val region: String,
     val roleArn: String,
     val sessionName: String,
-    val streamName:String,
+    val streamName: String,
 )

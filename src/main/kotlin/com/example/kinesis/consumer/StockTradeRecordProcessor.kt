@@ -8,7 +8,7 @@ import mu.KotlinLogging
 
 class StockTradeRecordProcessor : IRecordProcessor {
 
-    val logger = KotlinLogging.logger {}
+    private val logger = KotlinLogging.logger {}
 
     override fun initialize(shardId: String?) {
         println("ready for consuming message!!")
@@ -19,7 +19,8 @@ class StockTradeRecordProcessor : IRecordProcessor {
             return
         }
         records.stream().forEach {
-            logger.info { "consuming!!! $it" }
+
+            logger.info { "consuming!!! $it data:${String(it.data.array())} checkpointer: $checkpointer.toString()" }
         }
     }
 

@@ -1,7 +1,6 @@
 package com.example.kinesis.config
 
 import com.amazonaws.auth.STSAssumeRoleSessionCredentialsProvider
-import com.amazonaws.regions.Regions
 import com.amazonaws.services.kinesis.producer.KinesisProducer
 import com.amazonaws.services.kinesis.producer.KinesisProducerConfiguration
 import org.springframework.context.annotation.Bean
@@ -14,7 +13,6 @@ class KinesisProducerConfig(
 
     @Bean
     fun kinesisProducer(): KinesisProducer {
-        Regions.AP_NORTHEAST_1
         val configuration = KinesisProducerConfiguration()
             .setVerifyCertificate(false)
             .setRegion(awsProperties.region)

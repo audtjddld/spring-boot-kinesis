@@ -1,11 +1,8 @@
 package com.example.kinesis.web
 
-import com.amazonaws.services.kinesis.AmazonKinesis
-import com.amazonaws.services.kinesis.model.PutRecordRequest
 import com.amazonaws.services.kinesis.producer.KinesisProducer
 import com.example.kinesis.web.model.StockTrade
 import com.example.kinesis.web.model.TradeType
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
@@ -17,7 +14,7 @@ class ProducingController(
     private val producer: KinesisProducer
 ) {
 
-    var count:Int = 0
+    var count: Int = 0
     val streamName = "StockTradeStream"
 
     @GetMapping()

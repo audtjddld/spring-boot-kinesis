@@ -15,12 +15,12 @@ class KinesisConsumerConfig(
     @Bean
     fun KinesisClientLibConfiguration(): KinesisClientLibConfiguration {
         return KinesisClientLibConfiguration(
-            //awsProperties.sessionName,
-            "merchant-worker",
+            awsProperties.sessionName,
             awsProperties.streamName,
             STSAssumeRoleSessionCredentialsProvider.Builder(awsProperties.roleArn, awsProperties.sessionName)
                 .build(),
             workerId
         ).withRegionName(awsProperties.region)
+            .withInitialLeaseTableReadCapacity(100)
     }
 }
