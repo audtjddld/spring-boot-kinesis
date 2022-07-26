@@ -27,15 +27,22 @@ dependencies {
     kapt("org.springframework.boot:spring-boot-configuration-processor")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-    implementation("com.amazonaws:amazon-kinesis-client:1.14.8")
+    implementation("com.amazonaws:aws-java-sdk-sts:1.12.267")
+
+    implementation("software.amazon.kinesis:amazon-kinesis-client:2.4.1")
+    implementation(platform("software.amazon.awssdk:bom:2.15.0"))
+    implementation("software.amazon.awssdk:kinesis")
+    implementation("software.amazon.awssdk:sts")
+    implementation("software.amazon.awssdk:dynamodb")
+    implementation("software.amazon.awssdk:cloudwatch")
+    implementation("software.amazon.awssdk:apache-client:2.17.238")
+
+
     implementation("com.amazonaws:amazon-kinesis-producer:0.14.12") {
-        exclude(group = "commons-collections:commons-collections:3.2.2",)
+        exclude(group = "commons-collections:commons-collections:3.2.2")
     }
 
     implementation("org.apache.commons:commons-collections4:4.4")
-
-    implementation("com.amazonaws:aws-java-sdk-sts:1.12.267")
-    implementation("com.amazonaws:aws-java-sdk:1.12.267")
 
     implementation("io.github.microutils:kotlin-logging-jvm:2.1.23")
     implementation("org.slf4j:slf4j-api:1.7.36")
