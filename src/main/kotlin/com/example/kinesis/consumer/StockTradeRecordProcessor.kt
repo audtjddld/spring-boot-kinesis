@@ -1,36 +1,44 @@
 package com.example.kinesis.consumer
 
-import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessor
-import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessorCheckpointer
-import com.amazonaws.services.kinesis.clientlibrary.lib.worker.ShutdownReason
-import com.amazonaws.services.kinesis.model.Record
 import com.example.kinesis.web.model.StockTrade
 import mu.KotlinLogging
+import software.amazon.kinesis.lifecycle.events.*
+import software.amazon.kinesis.processor.ShardRecordProcessor
+import java.nio.charset.StandardCharsets
 
-class StockTradeRecordProcessor : IRecordProcessor {
-
+class StockTradeRecordProcessor : ShardRecordProcessor {
     private val logger = KotlinLogging.logger {}
+    private val decoder = StandardCharsets.UTF_8
 
-    override fun initialize(shardId: String?) {
-        println("ready for consuming message!! shardId:$shardId")
+    override fun initialize(initializationInput: InitializationInput) {
+        val kinesisShardId = initializationInput.shardId()
+        logger.info { "initializing record processor for shard : $kinesisShardId" }
     }
 
-    override fun processRecords(records: MutableList<Record>?, checkpointer: IRecordProcessorCheckpointer?) {
-        if (records == null) {
-            return
+    override fun processRecords(processRecordsInput: ProcessRecordsInput) {
+
+        logger.info("Processing ${processRecordsInput.records().size} record(s)")
+
+        processRecordsInput.records().forEach {
+            logger.info { "partition Key : ${it.partitionKey()} , sequence : ${it.sequenceNumber()}" }
+            val decode = decoder.decode(it.data())
+            val message = StockTrade.fromJsonAsBytes(decode.toString().toByteArray())
+            logger.info { "message : $message" }
+
         }
-        records.stream().forEach {
-
-            logger.info { "consuming!!! $it checkpointer: $checkpointer" }
-
-            val stockTrade = StockTrade.fromJsonAsBytes(it.data.array())
-
-            logger.info { "got $stockTrade" }
-
-        }
     }
 
-    override fun shutdown(checkpointer: IRecordProcessorCheckpointer?, reason: ShutdownReason?) {
-        println("shutdown...!!! reason : $reason")
+    override fun leaseLost(leaseLostInput: LeaseLostInput?) {
+        TODO("Not yet implemented")
     }
+
+    override fun shardEnded(shardEndedInput: ShardEndedInput) {
+        logger.info { "Reached shard end checking point." }
+    }
+
+    override fun shutdownRequested(shutdownRequestedInput: ShutdownRequestedInput) {
+        logger.info("Scheduler is shutting down, checkpointing.")
+        shutdownRequestedInput.checkpointer().checkpoint()
+    }
+
 }

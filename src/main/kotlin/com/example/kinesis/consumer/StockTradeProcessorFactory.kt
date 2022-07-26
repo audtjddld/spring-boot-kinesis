@@ -1,11 +1,11 @@
 package com.example.kinesis.consumer
 
-import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessor
-import com.amazonaws.services.kinesis.clientlibrary.interfaces.IRecordProcessorFactory
+import software.amazon.kinesis.processor.ShardRecordProcessor
+import software.amazon.kinesis.processor.ShardRecordProcessorFactory
 
-class StockTradeProcessorFactory : IRecordProcessorFactory {
 
-    override fun createProcessor(): IRecordProcessor {
+class StockTradeProcessorFactory : ShardRecordProcessorFactory {
+    override fun shardRecordProcessor(): ShardRecordProcessor {
         return StockTradeRecordProcessor()
     }
 }

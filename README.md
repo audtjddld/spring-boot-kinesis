@@ -176,3 +176,10 @@ https://github.com/aws/aws-sdk-java-v2/issues/446
 ### 종속 라이브러리 이슈
 
 https://docs.aws.amazon.com/ko_kr/sdk-for-java/latest/developer-guide/setup-project-gradle.html
+
+
+# 메시지 생성 방법
+
+```
+~\ curl http://localhost:8080
+```

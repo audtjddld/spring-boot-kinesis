@@ -19,7 +19,8 @@ class KinesisProducerConfig(
             .setCredentialsProvider(
                 STSAssumeRoleSessionCredentialsProvider.Builder(awsProperties.roleArn, awsProperties.sessionName)
                     .build()
-            )
+            ).setRequestTimeout(60000)
+            .setMaxConnections(2)
 
         return KinesisProducer(configuration)
     }
