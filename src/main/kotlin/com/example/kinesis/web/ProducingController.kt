@@ -37,12 +37,4 @@ class ProducingController(
 
         return ResponseEntity.ok().build()
     }
-
-    fun tradeType(): String {
-        return if (Random.nextInt() % 2 == 0) {
-            "BUY"
-        } else {
-            "SELL"
-        }
-    }
 }
