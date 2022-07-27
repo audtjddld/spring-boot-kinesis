@@ -44,16 +44,5 @@ class KinesisConfig(
                 )
         )
 
-        /*
-        return AmazonKinesisClientBuilder.standard()
-            .withRegion(awsProperties.region)
-            .withCredentials(
-                STSAssumeRoleSessionCredentialsProvider
-                    .Builder(awsProperties.roleArn, awsProperties.sessionName)
-                    .build()
-            )
-            .build()
-
-         */
     }
 }

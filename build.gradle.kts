@@ -44,7 +44,6 @@ dependencies {
     implementation("software.amazon.awssdk:cloudwatch")
     implementation("software.amazon.awssdk:apache-client:2.17.238")
 
-
     implementation("com.amazonaws:amazon-kinesis-producer:0.14.12") {
         exclude(group = "commons-collections:commons-collections:3.2.2")
     }

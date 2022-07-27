@@ -16,7 +16,6 @@ class StockTradeRecordProcessor : ShardRecordProcessor {
     }
 
     override fun processRecords(processRecordsInput: ProcessRecordsInput) {
-
         logger.info("Processing ${processRecordsInput.records().size} record(s)")
 
         processRecordsInput.records().forEach {
