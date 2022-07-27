@@ -9,5 +9,4 @@ class KinesisApplicationTests {
     @Test
     fun contextLoads() {
     }
-
 }

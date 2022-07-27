@@ -22,6 +22,7 @@ class KinesisConsumerConfig(
 ) {
     private val workerId = "merchant-worker"
     private val region = Region.of(awsProperties.region)
+    private val streamName = awsProperties.streamName
 
     @Bean
     fun consumerScheduler(): Scheduler {
@@ -37,7 +38,7 @@ class KinesisConsumerConfig(
         val shardRecordProcessor = StockTradeProcessorFactory()
 
         val configsBuilder = ConfigsBuilder(
-            awsProperties.streamName,
+            streamName,
             workerId,
             kinesisAsyncClient,
             dynamoDbAsyncClient,
@@ -51,7 +52,7 @@ class KinesisConsumerConfig(
             InitialPositionInStreamExtended.newInitialPosition(InitialPositionInStream.TRIM_HORIZON)
         val retrievalConfig =
             configsBuilder.retrievalConfig()
-                .retrievalSpecificConfig(PollingConfig(awsProperties.streamName, kinesisAsyncClient))
+                .retrievalSpecificConfig(PollingConfig(streamName, kinesisAsyncClient))
         retrievalConfig.initialPositionInStreamExtended(initialPositionInStreamExtended)
 
         return Scheduler(

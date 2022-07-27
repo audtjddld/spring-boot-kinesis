@@ -11,6 +11,3 @@ class KinesisApplication
 fun main(args: Array<String>) {
     runApplication<KinesisApplication>(*args)
 }
-
-
-

@@ -7,7 +7,7 @@ import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 
 @Component
-class ContextEventListener(
+class KinesisConsumerExecutor(
     private val stockTradeConsumer: StockTradeConsumer,
 ) {
     private val logger = KotlinLogging.logger {}
